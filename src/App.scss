@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "nunito";
+  src: local("nunito"), url(./assets/fonts/Nunito-Light.woff) format("woff");
+}
+
+#root {
+  width: auto;
+  max-height: 100vh;
+  height: 100vh;
+  overflow: auto;
+  font-family: "nunito";
+  color: #222222;
+}
+
+.input {
+  width: 100%;
+  max-width: 256px;
+
+  padding: 12px 24px;
+  box-sizing: border-box;
+  border: 0;
+
+  font-size: 1rem;
+  
+  &:focus-visible {
+    outline: 0;
+  }
+
+  &__base {
+    border: 2px solid #222222;
+    border-radius: 1rem;
+  }
+
+  &__search {
+    width: 0;
+    padding: 0;
+
+    &--focus {
+      width: 100%;
+      padding: 12px 24px;
+    }
+  }
+}
+
+.button {
+
+  &:hover {
+    cursor: pointer;  
+  }
+
+  &--base {
+    width: 100%;
+    max-width: 256px;
+    padding: 12px 16px;
+
+    box-sizing: border-box;
+
+    font-size: 1rem;
+    color: white;
+
+    background-color: #222222;
+    opacity: 0.3;
+
+    border: 2px solid transparent;
+    border-radius: 64px 16px;
+
+    transition: 0.5s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  &--search {
+    border: 0;
+    padding: 16px;
+
+    background-size: contain;
+    background-image: url(./assets/images/search.png);
+    background-color: white;
+    background-repeat: no-repeat;
+  }
+}
