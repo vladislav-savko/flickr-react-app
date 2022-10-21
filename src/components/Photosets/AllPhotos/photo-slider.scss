@@ -1,0 +1,76 @@
+.photo-slider {
+    border: 0;
+    padding: 0;
+
+    &::backdrop {
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    &__content {
+        max-height: 90vh;
+        height: 90vh;
+        overflow: hidden;
+    }
+
+    &__content-image {
+        height: 100%;
+        user-select: none;
+    }
+
+    &__control {
+        position: fixed;
+    }
+
+    &__control-back,
+    &__control-next,
+    &__control-exit {
+        position: fixed;
+        top: 0;
+        border: 0;
+        background-color: transparent;
+
+        &:focus-visible {
+            outline: 0;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            background-size: cover;
+            padding: 10px
+        }
+    }
+
+    &__control-back {
+        height: 100%;
+        width: 100px;
+        left: 0;
+
+        &::before {
+            background-image: url(../../../assets/images/backNotArrow.png);
+        }
+    }
+
+    &__control-next {
+        height: 100%;
+        width: 100px;
+        right: 0;
+
+        &::before {
+            background-image: url(../../../assets/images/next.png);
+        }
+    }
+
+    &__control-exit {
+        top: 50px;
+        left: calc(50% - 12px);
+
+        &::before {
+            background-image: url(../../../assets/images/exit.png);
+        }
+    }
+}
