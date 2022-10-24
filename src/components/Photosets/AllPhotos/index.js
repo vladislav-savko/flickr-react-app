@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
 import "./index.scss"
 import "./photo-slider.scss"
+import { useEffect, useMemo, useState } from "react"
 import { flickrAPI, createImageURL } from "../../../middleware/api/flickrAPI"
+import { ColorRing } from "react-loader-spinner"
 
 const AllPhotos = ( {photosetId} ) => {
     const [photoList, setPhotoList] = useState(null)
@@ -10,23 +11,60 @@ const AllPhotos = ( {photosetId} ) => {
     const [photoSlider, setPhotoSlider] = useState(null)
     const [photoViewIndex, setPhotoViewIndex] = useState(0)
 
+    const [photoListOffset, setPhotoListOffset] = useState(null)
+    const [preloaderVisible, setPreloaderVisible] = useState(true)
+
+    const [countRenderPhotos, setCountRenderPhotos] = useState(10)
+
     useEffect (() => {
         getPhotos()
     }, [photosetId])
 
     useEffect (() => {
-        if (photoList) {
-            setLoading(true)
+        if (photoList) {    
             setPhotoSlider(document.querySelector("#photoSlider"))
+            getPhotosOffset()
         }
     }, [photoList])
 
+    useEffect (() => {
+        if (photoListOffset) {
+            setLoading(true)
+            setPreloaderVisible(false)
+
+            if (photoListOffset.photos.length < photoList.photos.length) {
+                setCountRenderPhotos(countRenderPhotos + 15)
+                window.addEventListener("scroll", handleScroll)
+            } 
+        }
+    }, [photoListOffset])   
+
     const getPhotos = async () => {
         await flickrAPI().getPhotos(userInfo.userId, photosetId).then((response) => {
-            setPhotoList({
-                photos: response.photoset.photo,
-            })
+            if (response.stat == "ok") {
+                setPhotoList({
+                    photos: response.photoset.photo,
+                })
+            }
         })
+    }
+
+    const getPhotosOffset = () => {
+        setPreloaderVisible(true)
+
+        window.removeEventListener("scroll", handleScroll)
+
+        setTimeout(() => {
+            setPhotoListOffset({
+                photos: photoList.photos.slice(0, countRenderPhotos)
+            })
+        }, 2000)   
+    }
+
+    const handleScroll = () => {
+        if (document.documentElement.scrollHeight - window.pageYOffset - document.documentElement.clientHeight < 200) {
+            getPhotosOffset()
+        }
     }
 
     const handlePhotoClick = (indexPhoto) => {
@@ -64,23 +102,21 @@ const AllPhotos = ( {photosetId} ) => {
 
         if (indexPhoto == photoList.photos.length - 1) {
             controlNext.style.display = "none"
-        }
-        else {
+        } else {
             controlNext.style.display = "block"
         }
 
         if (indexPhoto == 0) {
             controlBack.style.display = "none"
-        }
-        else {
+        } else {
             controlBack.style.display = "block"
         }
     }
 
     return (
         <div className="all-photos"> {
-            loading &&
-            photoList.photos.map((photo, indexPhoto) => {
+            loading ?
+            photoListOffset.photos.map((photo, indexPhoto) => {
                 return (
                     <div className="all-photos__item" key={photo.id} onClick={() => handlePhotoClick(indexPhoto)}>
                         <div className="all-photos__item-image" style={{ background: `url(${createImageURL(photo.server, photo.secret, photo.id)})` }} />
@@ -90,7 +126,8 @@ const AllPhotos = ( {photosetId} ) => {
                         </div>
                     </div>
                 )
-            })} 
+            }) : null}
+            {<ColorRing visible={preloaderVisible} wrapperClass="all-photos__progressBar"/>}
             <dialog id="photoSlider" className="photo-slider">
                 <div className="photo-slider__content">
                     <img className="photo-slider__content-image" />
