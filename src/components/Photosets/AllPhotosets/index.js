@@ -2,16 +2,19 @@ import './index.scss'
 import { createImageURL } from '../../../middleware/api/flickrAPI'
 import { useEffect, useState } from 'react'
 import AllPhotos from '../AllPhotos'
+import { useNavigate } from 'react-router-dom'
 
-const AllPhotosets = ( {photosetsOffset} ) => {
+const AllPhotosets = ( {photosetsOffset, openedPhotosetId, userInfo, filter, page} ) => {
     const [photosetOpened, setPhotosetOpened] = useState(false)
     const [idPhotosetOpened, setIdPhotosetOpened] = useState(0)
     const [openedPhotosetDOMItem, setOpenedPhotosetDOMItem] = useState(null)
+
+    const navigate = useNavigate()
     
-    const handlePhotosetClick = (event, photosetId) => {
-        setOpenedPhotosetDOMItem(event.target)
-        setIdPhotosetOpened(photosetId)
-        setPhotosetOpened(true)
+    const handlePhotosetClick = (photosetId) => {
+        if (photosetId) {
+            navigate(`/${userInfo.userId}/${page}/${JSON.stringify(filter)}/${photosetId}`)
+        }
     }
 
     useEffect (() => {
@@ -21,8 +24,23 @@ const AllPhotosets = ( {photosetsOffset} ) => {
         }
     }, [openedPhotosetDOMItem])
 
+    useEffect (() => {
+        if (openedPhotosetId) {
+            openPhotoset(openedPhotosetId)
+        }
+    }, [openedPhotosetId]) 
+
+    const openPhotoset = (photosetId) => {
+        console.log(photosetId, openedPhotosetId)
+        setOpenedPhotosetDOMItem(document.querySelector(`.all-photosets__item[data-key="${photosetId}"]`))
+        setIdPhotosetOpened(photosetId)
+        setPhotosetOpened(true)
+    }
+
     const handleControlBackClick = (event) => {
         event.stopPropagation ()
+
+        navigate(`/${userInfo.userId}/${page}/${JSON.stringify(filter)}`)
 
         setPhotosetOpened(false)
 
@@ -34,10 +52,11 @@ const AllPhotosets = ( {photosetsOffset} ) => {
 
     return (
         <div className="all-photosets"> {
+            photosetsOffset.length ? 
             photosetsOffset.map((photoset) => {
                 return (
-                    <div className="all-photosets__item" key={photoset.id} 
-                        onClick={(event) => handlePhotosetClick(event, photoset.id)}
+                    <div className="all-photosets__item" key={photoset.id} data-key={photoset.id}
+                        onClick={(event) => handlePhotosetClick(photoset.id)}
                         style={{ background: `url(${createImageURL(photoset.server, photoset.secret, photoset.primary)})` }}>
                         <div className="all-photosets__item-title">
                             <div className="all-photosets__item-text">{photoset.title._content}</div>
@@ -57,7 +76,7 @@ const AllPhotosets = ( {photosetsOffset} ) => {
                         </div>
                     </div>
                 )
-            })}
+            }) : <span className='all-photosets__notFound'>No photosets found.</span> }
 
             {
                 photosetOpened &&
