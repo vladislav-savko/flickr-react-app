@@ -1,12 +1,11 @@
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
 
-const PagonationPhotosets = ( {page, countPages, setPage} ) => {
+const PagonationPhotosets = ( {page, countPages, userId, filter} ) => {
     const navigate = useNavigate()
 
     const handlePageClick = (indexPage) => {
-        navigate(`/photosets/${indexPage}`)
-        setPage(indexPage)
+        navigate(`/${userId}/${indexPage}/${JSON.stringify(filter)}`)
     }
 
     return (
