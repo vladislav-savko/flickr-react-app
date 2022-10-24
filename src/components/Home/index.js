@@ -38,7 +38,7 @@ const Home = () => {
                 <input 
                     type="text" 
                     name="userName" 
-                    className="input input__base" 
+                    className="input input--base" 
                     placeholder="Enter user name"
                     ref={inputUserNameRef}
                 />
