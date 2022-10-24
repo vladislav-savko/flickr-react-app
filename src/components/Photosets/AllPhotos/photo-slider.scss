@@ -1,6 +1,7 @@
 .photo-slider {
     border: 0;
     padding: 0;
+    background-color: transparent;
 
     &::backdrop {
         background: rgba(0, 0, 0, 0.6);
@@ -8,13 +9,12 @@
 
     &__content {
         max-height: 90vh;
-        height: 90vh;
         overflow: hidden;
     }
 
     &__content-image {
-        height: 100%;
         user-select: none;
+        width: 100%;
     }
 
     &__control {
@@ -52,6 +52,7 @@
 
         &::before {
             background-image: url(../../../assets/images/backNotArrow.png);
+            right: 0;
         }
     }
 
@@ -62,12 +63,15 @@
 
         &::before {
             background-image: url(../../../assets/images/next.png);
+            left: 0;
         }
     }
 
     &__control-exit {
-        top: 50px;
-        left: calc(50% - 12px);
+        top: 0;
+        left: 0;
+        height: 100px;
+        width: 100%;
 
         &::before {
             background-image: url(../../../assets/images/exit.png);
