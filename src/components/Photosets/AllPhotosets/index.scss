@@ -1,3 +1,5 @@
+@import '../../../App.scss';
+
 .all-photosets {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -78,7 +80,7 @@
     &__item-title {
         display: flex;
         align-items: flex-end;
-        gap: 2rem;
+        gap: 1rem;
         z-index: 1;
         pointer-events: none;
     }
@@ -95,8 +97,7 @@
     
     &__item-info {
         display: flex;
-        gap: 4rem;
-        padding-left: 2rem;
+        gap: 1rem;
         z-index: 1;
         pointer-events: none;
     }
@@ -115,8 +116,7 @@
             padding: 8px;
             background-repeat: no-repeat;
             background-size: contain;
-            position: absolute;
-            left: -2rem;
+            margin-right: 10px;
         }
     }
     
@@ -159,6 +159,39 @@
         &::before {
             left: 0;
             background-image: url(../../../assets/images/back.png);
+        }
+    }
+
+    &__notFound {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+
+        grid-column-start: 1;
+        grid-column-end: 4;
+    }
+
+    @media (max-width: $notebook-plus-width) {
+        grid-template-columns: repeat(2, 1fr);
+
+        &__notFound {
+            grid-column-end: 3;
+        }
+    }
+
+    @media (max-width: $tablet-width) {
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 1rem;
+
+        &__item {
+            padding: 25px;
+            gap: 0.4rem;
+
+            height: 270px;
+        }
+
+        &__notFound {
+            grid-column-end: 2;
         }
     }
 }
