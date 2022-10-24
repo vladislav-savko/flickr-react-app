@@ -4,7 +4,6 @@ import { flickrAPI } from "../../middleware/api/flickrAPI"
 import { useNavigate } from "react-router-dom"
 
 const Home = () => {
-
     const inputUserNameRef = useRef(null)
     const [userInfo, setUserInfo] = useState(null)
     const navigation = useNavigate()
@@ -12,7 +11,7 @@ const Home = () => {
     useEffect(() => {
         if (userInfo) {
             localStorage.setItem("userInfo", JSON.stringify(userInfo))
-            navigation("/photosets")
+            navigation(`/${userInfo.userId}`)
         }
     }, [userInfo])
 
