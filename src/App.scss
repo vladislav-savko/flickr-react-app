@@ -3,6 +3,11 @@
   src: local("nunito"), url(./assets/fonts/Nunito-Light.woff) format("woff");
 }
 
+$notebook-plus-width: 1250px; 
+$notebook-width: 1024px; 
+$tablet-width: 768px;
+$mobile-wodth: 460px;
+
 #root {
   width: auto;
   max-height: 100vh;
