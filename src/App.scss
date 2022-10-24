@@ -31,19 +31,31 @@ $mobile-wodth: 460px;
     outline: 0;
   }
 
-  &__base {
+  &--base,
+  &--select {
     border: 2px solid #222222;
     border-radius: 1rem;
   }
 
-  &__search {
+  &--select::after {
+    content: "<";
+  }
+
+  &--search {
     width: 0;
-    padding: 0;
+    padding: 12px 0;
+    border-radius: 16px 0 0 16px;
+
+    transition: width 0.3s;
 
     &--focus {
       width: 100%;
       padding: 12px 24px;
     }
+  }
+
+  @media (max-width: $tablet-width) {
+    max-width: 100%;
   }
 }
 
@@ -76,13 +88,136 @@ $mobile-wodth: 460px;
     }
   }
   
-  &--search {
+  &--search,
+  &--filter {
     border: 0;
-    padding: 16px;
-
+  
     background-size: contain;
-    background-image: url(./assets/images/search.png);
     background-color: white;
     background-repeat: no-repeat;
   }
+
+  &--search {
+    background-image: url(./assets/images/search.png);
+
+    padding: 16px;
+  }
+
+  &--filter {
+    background-image: url(./assets/images/filter.png);
+
+    padding: 12px;
+  }
+
+  @media (max-width: $tablet-width) {
+    &--base {
+      max-width: 100%;
+    }
+  }
+}
+
+.select {
+  display: none;
+}
+
+.select-custom {
+  width: 100%;
+  max-width: 256px;
+  min-width: 200px;
+
+  padding: 12px 24px;
+  box-sizing: border-box;
+  border: 0;
+  border: 2px solid #222222;
+  border-radius: 1rem;
+
+  position: relative;
+
+  display: flex;
+
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    border-radius: 1rem 1rem 0 0;
+
+    &::after {
+      transform: rotate(-90deg);
+    }
+  } 
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    background-image: url(./assets/images/down-arrow.png);
+    background-size: cover;
+    padding: 10px;
+    transition: 0.3s;
+  }
+
+  &--active {
+    border-radius: 1rem 1rem 0 0;
+
+    &::after {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__list {
+    position: absolute;
+    left: -2px;
+    bottom: -2px;
+
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+
+    width: calc(100% + 4px);
+    height: 0px;
+
+    transition: 0.3s;
+
+    overflow: hidden;
+
+    &--active {
+      bottom: -90px;
+      height: 88px;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 12px 24px;
+
+    border-width: 0 2px 2px 2px;
+    border-top: 0;
+    border-color: black;
+
+    background-color: white;
+    
+    font-size: 1rem;
+    font-weight: 100;
+    color: #222222;
+    text-align: left;
+
+    transition: 0.3s;
+
+    &:hover {
+      background-color: #222222;
+      color: white;
+    }
+
+    &:last-child {
+      border-radius: 0 0 1rem 1rem;
+    }
+  }
+
+  @media (max-width: $tablet-width) {
+    max-width: 100%;
+  }
+}
+
+.ml-a {
+  margin-left: auto;
 }
