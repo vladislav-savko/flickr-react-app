@@ -22,7 +22,7 @@ const AllPhotos = ( {photosetId} ) => {
 
     useEffect (() => {
         if (photoList) {    
-            setPhotoSlider(document.querySelector("#photoSlider"))
+            setPhotoSlider(document.getElementById("photoSlider"))
             getPhotosOffset()
         }
     }, [photoList])
@@ -88,9 +88,10 @@ const AllPhotos = ( {photosetId} ) => {
     }
 
     const viewPhoto = (indexPhoto) => {
-        let imageBox = photoSlider.querySelector(".photo-slider__content-image")
-        let controlBack = photoSlider.querySelector(".photo-slider__control-back")
-        let controlNext = photoSlider.querySelector(".photo-slider__control-next")
+        let imageBox = photoSlider.children[0].children[0]
+
+        let controlBack = photoSlider.children[1].children[1]
+        let controlNext = photoSlider.children[1].children[2]
 
         let photo = photoList.photos[indexPhoto]
 

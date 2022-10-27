@@ -166,7 +166,7 @@ const User = (ctx) => {
 
     const handleSearchClick = (event) => {
         event.preventDefault()
-        let inputSearchDOMElement = document.querySelector(".input--search")
+        let inputSearchDOMElement = document.getElementById("userName")
 
         if (!searchOpened) {
             inputSearchDOMElement.classList.add("input--search--focus")
@@ -180,7 +180,7 @@ const User = (ctx) => {
     }
 
     const handleFilterClick = (event) => {
-        let filterContentDOMElement = document.querySelector(".photosets__filter-content")
+        let filterContentDOMElement = document.getElementById('formFilter')
 
         if (!filterOpened) {
             filterContentDOMElement.classList.add("photosets__filter-content--active")
@@ -192,8 +192,8 @@ const User = (ctx) => {
     }
 
     const handleSelectClick = (event) => {
-        let customSelectDOMElement = document.querySelector(".select-custom")
-        let selectListDOMElement = customSelectDOMElement.querySelector(".select-custom__list")
+        let customSelectDOMElement = document.getElementById("filterSortFake")
+        let selectListDOMElement = customSelectDOMElement.children[1]
 
         if (!customSelectOpened) {
             customSelectDOMElement.classList.add("select-custom--active")
@@ -208,11 +208,12 @@ const User = (ctx) => {
 
     const handleSelectOptionClick = (event, sort) => {
         event.preventDefault()
+        let customSelectDOMElement = document.getElementById('filterSortFake')
+        let customSelectTextDOMElement = customSelectDOMElement.children[0]
         
-        let customSelectTextDOMElement = document.querySelector(".select-custom__selected")
-        let selectDOMElement = document.querySelector("#filterSort")
+        let selectDOMElement = document.getElementById("filterSort")
 
-        let selectOptionDOMElement = selectDOMElement.querySelector(`option[value="${sort}"]`)
+        let selectOptionDOMElement = selectDOMElement.children[sort]
 
         selectOptionDOMElement.selected = true
         customSelectTextDOMElement.innerHTML = sortObject[sort]
@@ -240,6 +241,7 @@ const User = (ctx) => {
                         <input 
                             type="text" 
                             name="userName"
+                            id="userName"
                             className="input input--search" 
                             placeholder="Enter user name" 
                             ref={inputSearchRef}
@@ -255,10 +257,11 @@ const User = (ctx) => {
                 <div className="photosets__filter">
                     <button className="button button--filter" onClick={(event) => handleFilterClick(event)}/>
                 </div>
-                <form className="photosets__filter-content">
+                <form className="photosets__filter-content" id="formFilter">
                     <input 
                         type="text"
                         name="filterName"
+                        id="filterName"
                         className="input input--base" 
                         placeholder="Enter photoset name"   
                         ref={inputFilterPhotosetNameRef}
@@ -274,7 +277,7 @@ const User = (ctx) => {
                         <option value={1}>by name</option>
                     </select>
 
-                    <div className="select-custom" onClick={(event) => handleSelectClick(event)}>
+                    <div className="select-custom" id="filterSortFake" onClick={(event) => handleSelectClick(event)}>
                         <div className="select-custom__selected">
                             Sort by default
                         </div>

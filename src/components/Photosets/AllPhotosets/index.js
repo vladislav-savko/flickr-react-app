@@ -20,7 +20,7 @@ const AllPhotosets = ( {photosetsOffset, openedPhotosetId, userInfo, filter, pag
     useEffect (() => {
         if (openedPhotosetDOMItem) {
             openedPhotosetDOMItem.classList.add('all-photosets__item--open')
-            openedPhotosetDOMItem.querySelector('.all-photosets__control').style.display = 'block'
+            openedPhotosetDOMItem.children[2].style.display = 'block'
         }
     }, [openedPhotosetDOMItem])
 
@@ -31,8 +31,7 @@ const AllPhotosets = ( {photosetsOffset, openedPhotosetId, userInfo, filter, pag
     }, [openedPhotosetId]) 
 
     const openPhotoset = (photosetId) => {
-        console.log(photosetId, openedPhotosetId)
-        setOpenedPhotosetDOMItem(document.querySelector(`.all-photosets__item[data-key="${photosetId}"]`))
+        setOpenedPhotosetDOMItem(document.getElementById(photosetId))
         setIdPhotosetOpened(photosetId)
         setPhotosetOpened(true)
     }
@@ -45,7 +44,7 @@ const AllPhotosets = ( {photosetsOffset, openedPhotosetId, userInfo, filter, pag
         setPhotosetOpened(false)
 
         openedPhotosetDOMItem.classList.remove('all-photosets__item--open')
-        openedPhotosetDOMItem.querySelector('.all-photosets__control').style.display = 'none'
+        openedPhotosetDOMItem.children[2].style.display = 'none'
 
         setOpenedPhotosetDOMItem(null)
     }
@@ -55,7 +54,7 @@ const AllPhotosets = ( {photosetsOffset, openedPhotosetId, userInfo, filter, pag
             photosetsOffset.length ? 
             photosetsOffset.map((photoset) => {
                 return (
-                    <div className="all-photosets__item" key={photoset.id} data-key={photoset.id}
+                    <div className="all-photosets__item" key={photoset.id} id={photoset.id}
                         onClick={(event) => handlePhotosetClick(photoset.id)}
                         style={{ background: `url(${createImageURL(photoset.server, photoset.secret, photoset.primary)})` }}>
                         <div className="all-photosets__item-title">
