@@ -5,6 +5,7 @@ import PagonationPhotosets from "./PaginationPhotosets"
 import AllPhotosets from "./AllPhotosets"
 import { useNavigate } from "react-router-dom"
 import { PhotosetsSkeleton } from "./Skeleton"
+import { ColorRing } from "react-loader-spinner"
 
 const User = (ctx) => {
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem("userInfo")))
@@ -22,6 +23,8 @@ const User = (ctx) => {
     const [customSelectOpened, setCustomSelectOpened] = useState(false)
 
     const [filter, setFilter] = useState(JSON.parse(ctx.params.filter))
+
+    const [preloaderVisible, setPreloaderVisible] = useState(true)
 
     const inputSearchRef = useRef(null)
     const inputFilterPhotosetNameRef = useRef("")
@@ -55,6 +58,13 @@ const User = (ctx) => {
             setOpenedPhotosetId(params.photosetId)
         }
 
+        if (!(userInfo && userInfo.userId == params.userId) || 
+        (page != params.page) || 
+        (filter.sort != JSON.parse(params.filter).sort || filter.photosetName != JSON.parse(params.filter).photosetName)) {
+            setPreloaderVisible(true)
+            setLoading(false)
+        }
+
     }, [ctx.params])
 
     useEffect (() => {
@@ -69,6 +79,7 @@ const User = (ctx) => {
     useEffect (() => {
         if (photosetsOffset) {
             setLoading(true)
+            setPreloaderVisible(false)
         }
     }, [photosetsOffset])
 
@@ -143,6 +154,7 @@ const User = (ctx) => {
         setTimeout(() => {
             setPhotosetsOffset(slicePhotosetArray)
         }, 1000)   
+        setPhotosetsOffset(slicePhotosetArray) 
     }
 
     const getUserInfo = async () => {
@@ -292,7 +304,15 @@ const User = (ctx) => {
             </div>
             {
                 loading ? 
-                    <AllPhotosets photosetsOffset={photosetsOffset} openedPhotosetId={openedPhotosetId} userInfo={userInfo} filter={filter} page={page}/> : <PhotosetsSkeleton />
+                    <AllPhotosets photosetsOffset={photosetsOffset} openedPhotosetId={openedPhotosetId} userInfo={userInfo} filter={filter} page={page}/> : 
+                    <>
+                        <PhotosetsSkeleton />
+                        <ColorRing 
+                            visible={preloaderVisible} 
+                            wrapperClass="photosets__progressBar"
+                            colors={['#222222', '#222222', '#222222', '#222222','#222222']}
+                        />
+                    </>
             }
             {
                 <PagonationPhotosets page={page} countPages={countPages} userId={ctx.params.userId} filter={filter}/>
