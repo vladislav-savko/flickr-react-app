@@ -134,7 +134,7 @@ const User = (ctx) => {
             }
 
             if (filterOff.photosetName) {
-                filterPhotosetArray.photoset = filterPhotosetArray.photoset.filter((photoset) => photoset.title._content.includes(filterOff.photosetName))
+                filterPhotosetArray.photoset = filterPhotosetArray.photoset.filter((photoset) => (photoset.title._content.toLowerCase().includes(filterOff.photosetName.toLowerCase())))
                 filterPhotosetArray.countPhotosets = filterPhotosetArray.photoset.length
             } 
         }
