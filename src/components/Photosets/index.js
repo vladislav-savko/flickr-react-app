@@ -103,8 +103,9 @@ const User = (ctx) => {
     }
 
     const getPhotosetsOffset = (filterOff) => {
-        let beginSlice = (page - 1) * 9
-        let endSlice = beginSlice + 9
+        let limit = 9
+        let beginSlice = (page - 1) * limit
+        let endSlice = beginSlice + limit
 
         let filterPhotosetArray = Object.assign({}, photosetsInfo)
 
