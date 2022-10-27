@@ -151,9 +151,6 @@ const User = (ctx) => {
             photoset.date_create = shortDate.toString()
         })
 
-        setTimeout(() => {
-            setPhotosetsOffset(slicePhotosetArray)
-        }, 1000)   
         setPhotosetsOffset(slicePhotosetArray) 
     }
 
