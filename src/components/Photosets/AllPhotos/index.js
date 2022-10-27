@@ -128,7 +128,11 @@ const AllPhotos = ( {photosetId} ) => {
                     </div>
                 )
             }) : null}
-            {<ColorRing visible={preloaderVisible} wrapperClass="all-photos__progressBar"/>}
+            { <ColorRing 
+                visible={preloaderVisible} 
+                wrapperClass="all-photos__progressBar"
+                colors={['#222222', '#222222', '#222222', '#222222','#222222']}
+            /> }
             <dialog id="photoSlider" className="photo-slider">
                 <div className="photo-slider__content">
                     <img className="photo-slider__content-image" />
