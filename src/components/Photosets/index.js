@@ -50,7 +50,7 @@ const User = (ctx) => {
             setPage(params.page)
         }
 
-        if (filter != JSON.parse(params.filter)) {
+        if (filter.sort != JSON.parse(params.filter).sort || filter.photosetName != JSON.parse(params.filter).photosetName) {
             setFilter(JSON.parse(params.filter))
         }
 
