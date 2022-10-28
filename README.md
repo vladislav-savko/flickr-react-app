@@ -1,6 +1,17 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+& with [Flickr API](https://www.flickr.com/services/api/).
+
+## Published version 
+
+This project was published on [Heroku](https://flickrreactapp.herokuapp.com/).
+
+### Test names
+
+`Berduu`
+`Try again`
+`CaptPiper`
 
 ## Available Scripts
 
